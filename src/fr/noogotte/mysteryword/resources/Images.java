@@ -12,6 +12,7 @@ public class Images {
     public static final String background = "background";
     public static final String button = "button";
     public static final String button_pressed = "button_pressed";
+    public static final String newWord = "newWord";
 
     private HashMap<String, Image> images = new HashMap<String, Image>();
 
