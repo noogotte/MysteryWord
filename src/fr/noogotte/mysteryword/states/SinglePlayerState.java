@@ -80,7 +80,7 @@ public class SinglePlayerState extends BasicGameState {
         if(input.isKeyPressed(Input.KEY_ESCAPE)) {
             sbg.enterState(MenuState.ID);
         }
-        if(input.isKeyPressed(Input.KEY_R)) {
+        if(input.isKeyPressed(Input.KEY_TAB)) {
             updateWordToFind();
             trialNumber++;
         }
