@@ -1,4 +1,4 @@
-package fr.noogotte.mysteryword;
+package fr.noogotte.mysteryword.gui;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.gui.ComponentListener;

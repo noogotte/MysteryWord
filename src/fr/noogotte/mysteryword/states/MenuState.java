@@ -7,9 +7,8 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.Log;
 
-import fr.noogotte.mysteryword.Button;
+import fr.noogotte.mysteryword.gui.Button;
 
 public class MenuState extends BasicGameState {
 
@@ -22,12 +21,12 @@ public class MenuState extends BasicGameState {
             throws SlickException {
         singlePlayerButton = new Button(gc, 100, 100, new ComponentListener() {
             @Override
-            public void componentActivated(AbstractComponent arg0) {
+            public void componentActivated(AbstractComponent ac) {
             }
         });
         multiPlayerButton = new Button(gc, 100, 200, new ComponentListener() {
             @Override
-            public void componentActivated(AbstractComponent arg0) {
+            public void componentActivated(AbstractComponent ac) {
             }
         });
     }
