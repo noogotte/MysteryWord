@@ -1,10 +1,14 @@
 package fr.noogotte.mysteryword.states;
 
+import java.awt.Font;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.BasicGameState;
@@ -20,12 +24,13 @@ public class WinState extends BasicGameState{
     private Button goToMenu;
     private SinglePlayerState state;
     private Music victory;
+    private TrueTypeFont slickFont;
 
     @Override
     public void init(final GameContainer gc, final StateBasedGame sbg)
             throws SlickException {
         state = (SinglePlayerState) sbg.getState(SinglePlayerState.ID);
-        background = Images.getInstance().getImage(Images.background);
+        background = Images.getInstance().getImage(Images.background_win);
         goToMenu = new Button(gc, gc.getWidth() / 2 - (594 / 2), 500, new ComponentListener() {
             @Override
             public void componentActivated(AbstractComponent arg0) {
@@ -33,6 +38,8 @@ public class WinState extends BasicGameState{
             }
         });
         victory = new Music("lib/res/musics/victory.ogg");
+        Font font = new Font("Arial Black", Font.BOLD, 20);
+        slickFont = new TrueTypeFont(font, true);
     }
 
     @Override
@@ -51,11 +58,17 @@ public class WinState extends BasicGameState{
         background.draw();
         goToMenu.render(gc, g);
         goToMenu.drawName(g, "Retour au menu");
+        String sentence = "";
         if (state.getTrialNumber() == 1) {
-            g.drawString("Bravo, vous avez trouvé le mot mystère en " + state.getTrialNumber() + " coup. Bravo !", gc.getWidth() / 2 - 57 * 4, gc.getWidth() / 2);
+            sentence = "Bravo, vous avez trouvé le mot mystère en " + state.getTrialNumber() + " coup.";
         } else {
-            g.drawString("Bravo, vous avez trouvé le mot mystère en " + state.getTrialNumber() + " coups. Bravo !", gc.getWidth() / 2 - 57 * 4, gc.getWidth() / 2);
+            sentence = "Bravo, vous avez trouvé le mot mystère en " + state.getTrialNumber() + " coups.";
         }
+        g.setFont(slickFont);
+        g.setColor(Color.green);
+        g.drawString(sentence, gc.getWidth() / 2 - sentence.length() * 6, gc.getHeight() / 2);
+        g.setFont(gc.getDefaultFont());
+        g.setColor(Color.black);
     }
 
     @Override
