@@ -32,6 +32,7 @@ public class SinglePlayerState extends BasicGameState {
     private Image background;
     private String wordToFindStr;
     private String wordMix;
+    private String wordToFindDesc;
     private TextField wordToFind;
     private int trialNumber = 0;
     private Button validate;
@@ -72,8 +73,10 @@ public class SinglePlayerState extends BasicGameState {
         validate.drawName(g, "Valider");
         g.setColor(Color.black);
         g.drawString("Le mot mystère à trouver est : " +
-                wordMix, gc.getWidth() / 2 - (31  + wordToFindStr.length()) * 4, gc.getHeight() / 2 - 50);
+                wordMix, gc.getWidth() / 2 - (31  + wordMix.length()) * 4, gc.getHeight() / 2 - 50);
         g.drawString("Votre proposition :", gc.getWidth() / 2 - 275, gc.getHeight() / 2 - 10);
+        g.drawString("La description du mot est : " +
+                wordToFindDesc, gc.getWidth() / 2 - (28  + wordToFindDesc.length()) * 4, gc.getHeight() / 2 + 50);
         g.setColor(Color.red);
         g.drawString("Nombre d'essais : " + trialNumber, gc.getWidth() / 2 + 100, gc.getHeight() / 2 - 10);
         g.setColor(Color.black);
@@ -118,12 +121,12 @@ public class SinglePlayerState extends BasicGameState {
         } catch (FileNotFoundException e) {
             Log.error("File not found " + file.getAbsolutePath());
         }
-
-        int line = new Random().nextInt(22740) + 1;
+        
+        int line = new Random().nextInt(5) + 1;
 
         try {
-            while (reader.readLine() != null){
-                if (reader.getLineNumber() == line && reader.readLine().length() > 3) {
+            while (reader.readLine() != null) {
+                if (reader.getLineNumber() == line) {
                     return reader.readLine();
                 }
             }
@@ -137,8 +140,11 @@ public class SinglePlayerState extends BasicGameState {
     public void updateWordToFind() {
         File file = new File("lib/res/mots.txt");
         System.out.println(file.getAbsolutePath());
-        wordToFindStr = getWordInFile(file);
-        System.out.println(wordToFindStr);
+        String wordInFile = getWordInFile(file);
+        String[] words = wordInFile.split(":");
+        wordToFindStr = words[0];
+        wordToFindDesc = words[1];
+        System.out.println(wordToFindStr + " Desc : " + wordToFindDesc);
         wordMix = mixLetter(wordToFindStr);
     }
 
