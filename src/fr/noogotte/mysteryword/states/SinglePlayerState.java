@@ -21,6 +21,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 import fr.noogotte.mysteryword.gui.Button;
 import fr.noogotte.mysteryword.resources.Images;
@@ -53,6 +54,13 @@ public class SinglePlayerState extends BasicGameState {
                 }
             }
         });
+    }
+
+    @Override
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        updateWordToFind();
+        trialNumber = 0;
+        wordToFind.setText("");
     }
 
     @Override
@@ -108,7 +116,7 @@ public class SinglePlayerState extends BasicGameState {
         try {
             reader = new LineNumberReader(new FileReader(file));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.error("File not found " + file.getAbsolutePath());
         }
 
         int line = new Random().nextInt(22740) + 1;
@@ -127,7 +135,9 @@ public class SinglePlayerState extends BasicGameState {
     }
 
     public void updateWordToFind() {
-        wordToFindStr = getWordInFile(new File("lib/res/mots.txt"));
+        File file = new File("lib/res/mots.txt");
+        System.out.println(file.getAbsolutePath());
+        wordToFindStr = getWordInFile(file);
         System.out.println(wordToFindStr);
         wordMix = mixLetter(wordToFindStr);
     }
