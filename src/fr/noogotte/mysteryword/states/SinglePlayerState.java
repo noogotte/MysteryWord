@@ -21,7 +21,6 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.Log;
 
 import fr.noogotte.mysteryword.gui.Button;
 import fr.noogotte.mysteryword.resources.Images;
@@ -48,10 +47,9 @@ public class SinglePlayerState extends BasicGameState {
             @Override
             public void componentActivated(AbstractComponent ac) {
                 String trialWord = wordToFind.getText();
-                if (!trialWord.equals(wordToFindStr)) {
-                    trialNumber++;
-                } else {
-                    Log.info("Win");
+                trialNumber++;
+                if (trialWord.equals(wordToFindStr)) {
+                    sbg.enterState(WinState.ID);
                 }
             }
         });
@@ -132,5 +130,9 @@ public class SinglePlayerState extends BasicGameState {
         wordToFindStr = getWordInFile(new File("lib/res/mots.txt"));
         System.out.println(wordToFindStr);
         wordMix = mixLetter(wordToFindStr);
+    }
+
+    public int getTrialNumber() {
+        return trialNumber;
     }
 }
