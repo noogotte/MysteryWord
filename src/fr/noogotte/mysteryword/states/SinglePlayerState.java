@@ -34,13 +34,14 @@ public class SinglePlayerState extends BasicGameState {
     private String wordMix;
     private String wordToFindDesc;
     private TextField wordToFind;
-    private int trialNumber = 0;
+    private int life = 5;
     private Button validate;
 
     @Override
     public void init(final GameContainer gc, final StateBasedGame sbg)
             throws SlickException {
-        updateWordToFind();
+        wordToFindStr = "";
+        wordToFindDesc = "";
         background = Images.getInstance().getImage(Images.background);
         wordToFind = new TextField(gc, gc.getDefaultFont(), gc.getWidth() / 2 - 75, gc.getHeight() / 2 - 10, 150, 20);
         wordToFind.setBorderColor(Color.black);
@@ -49,9 +50,11 @@ public class SinglePlayerState extends BasicGameState {
             @Override
             public void componentActivated(AbstractComponent ac) {
                 String trialWord = wordToFind.getText();
-                trialNumber++;
                 if (trialWord.equals(wordToFindStr)) {
                     sbg.enterState(WinState.ID);
+                } else {
+                    life--;
+                    wordToFind.setText("");
                 }
             }
         });
@@ -60,7 +63,7 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void enter(GameContainer container, StateBasedGame game) throws SlickException {
         updateWordToFind();
-        trialNumber = 0;
+        life = getMaxLife();
         wordToFind.setText("");
     }
 
@@ -78,7 +81,7 @@ public class SinglePlayerState extends BasicGameState {
         g.drawString("La description du mot est : " +
                 wordToFindDesc, gc.getWidth() / 2 - (28  + wordToFindDesc.length()) * 4, gc.getHeight() / 2 + 50);
         g.setColor(Color.red);
-        g.drawString("Nombre d'essais : " + trialNumber, gc.getWidth() / 2 + 100, gc.getHeight() / 2 - 10);
+        g.drawString("Nombre d'essais restants : " + life, gc.getWidth() / 2 + 100, gc.getHeight() / 2 - 10);
         g.setColor(Color.black);
     }
 
@@ -89,9 +92,13 @@ public class SinglePlayerState extends BasicGameState {
         if(input.isKeyPressed(Input.KEY_ESCAPE)) {
             sbg.enterState(MenuState.ID);
         }
+
+        if (life == 0) {
+            sbg.enterState(LooseState.ID);
+        }
         if(input.isKeyPressed(Input.KEY_TAB)) {
             updateWordToFind();
-            trialNumber++;
+            life--;
         }
     }
 
@@ -121,7 +128,7 @@ public class SinglePlayerState extends BasicGameState {
         } catch (FileNotFoundException e) {
             Log.error("File not found " + file.getAbsolutePath());
         }
-        
+
         int line = new Random().nextInt(5) + 1;
 
         try {
@@ -148,7 +155,15 @@ public class SinglePlayerState extends BasicGameState {
         wordMix = mixLetter(wordToFindStr);
     }
 
-    public int getTrialNumber() {
-        return trialNumber;
+    public int getLife() {
+        return life;
+    }
+
+    public int getMaxLife() {
+        return 5;
+    }
+
+    public String getWordToFindStr() {
+        return wordToFindStr;
     }
 }

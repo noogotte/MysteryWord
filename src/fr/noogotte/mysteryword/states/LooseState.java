@@ -17,39 +17,39 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.noogotte.mysteryword.gui.Button;
 import fr.noogotte.mysteryword.resources.Images;
 
-public class WinState extends BasicGameState{
+public class LooseState extends BasicGameState{
 
-    public static final int ID = 3;
+    public static final int ID = 4;
     private Image background;
     private Button goToMenu;
     private SinglePlayerState state;
-    private Music victory;
+    private Music loose;
     private TrueTypeFont slickFont;
 
     @Override
     public void init(final GameContainer gc, final StateBasedGame sbg)
             throws SlickException {
         state = (SinglePlayerState) sbg.getState(SinglePlayerState.ID);
-        background = Images.getInstance().getImage(Images.background_win);
+        background = Images.getInstance().getImage(Images.background);
         goToMenu = new Button(gc, gc.getWidth() / 2 - (594 / 2), 500, new ComponentListener() {
             @Override
             public void componentActivated(AbstractComponent arg0) {
                 sbg.enterState(MenuState.ID);
             }
         });
-        victory = new Music("lib/res/musics/victory.ogg");
+        loose = new Music("lib/res/musics/loose.ogg");
         Font font = new Font("Arial Black", Font.BOLD, 20);
         slickFont = new TrueTypeFont(font, true);
     }
 
     @Override
     public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-        victory.loop(1f, 0.2f);
+        loose.loop(1f, 0.2f);
     }
 
     @Override
     public void leave(GameContainer container, StateBasedGame game) {
-        victory.fade(500, 0.0f, true);
+        loose.fade(500, 0.0f, true);
     }
 
     @Override
@@ -58,10 +58,12 @@ public class WinState extends BasicGameState{
         background.draw();
         goToMenu.render(gc, g);
         goToMenu.drawName(g, "Retour au menu");
-        String sentence = "Bravo, vous avez trouvé le mot mystère, il vous reste " + state.getLife() + " vie.";
+        String sentence = "Mince, vous n'avez pas trouvé le mot mystère qui était : ";
         g.setFont(slickFont);
         g.setColor(Color.green);
         g.drawString(sentence, gc.getWidth() / 2 - sentence.length() * 6, gc.getHeight() / 2);
+        sentence = state.getWordToFindStr();
+        g.drawString(sentence, gc.getWidth() / 2 - sentence.length() * 6, gc.getHeight() / 2 + 20);
         g.setFont(gc.getDefaultFont());
         g.setColor(Color.black);
     }

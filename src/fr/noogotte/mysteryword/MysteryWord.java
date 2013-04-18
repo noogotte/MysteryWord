@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.noogotte.mysteryword.states.LooseState;
 import fr.noogotte.mysteryword.states.MenuState;
 import fr.noogotte.mysteryword.states.MultiPlayerState;
 import fr.noogotte.mysteryword.states.SinglePlayerState;
@@ -21,5 +22,6 @@ public class MysteryWord extends StateBasedGame {
         addState(new SinglePlayerState());
         addState(new MultiPlayerState());
         addState(new WinState());
+        addState(new LooseState());
     }
 }
