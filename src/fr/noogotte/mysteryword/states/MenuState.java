@@ -21,7 +21,7 @@ public class MenuState extends BasicGameState {
 
     @Override
     public void init(final GameContainer gc, final StateBasedGame sbg)
-            throws SlickException {
+            throws SlickException {       
         background = Images.getInstance().getImage(Images.background);
         singlePlayerButton = new Button(gc, 100, 100, new ComponentListener() {
             @Override
@@ -42,8 +42,8 @@ public class MenuState extends BasicGameState {
         background.draw();
         singlePlayerButton.render(gc, g);
         multiPlayerButton.render(gc, g);
-        singlePlayerButton.drawName(g, "SinglePlayer");
-        multiPlayerButton.drawName(g, "MultiPlayer");
+        singlePlayerButton.drawName(g, "Un Joueur");
+        multiPlayerButton.drawName(g, "Multi Joueurs");
     }
 
     @Override
