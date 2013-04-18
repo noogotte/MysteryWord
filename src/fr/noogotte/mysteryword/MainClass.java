@@ -8,6 +8,7 @@ public class MainClass {
     public static void main(String[] args) throws SlickException {
         AppGameContainer mystery =
                 new AppGameContainer(new MysteryWord(), 800, 600, false);
+        mystery.setShowFPS(false);
         mystery.start();
     }
 }
